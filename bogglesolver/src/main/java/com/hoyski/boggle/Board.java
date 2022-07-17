@@ -25,7 +25,7 @@ public class Board {
         int requiredSize = Board.BOARD_WIDTH_AND_HEIGHT * Board.BOARD_WIDTH_AND_HEIGHT;
 
         if (letters.size() != requiredSize) {
-            throw new IllegalArgumentException("BoggleSolver must be constructed with exactly " + requiredSize + " strings");
+            throw new IllegalArgumentException("BoggleSolver must be constructed with exactly " + requiredSize + " letters");
         }
 
         int index = 0;

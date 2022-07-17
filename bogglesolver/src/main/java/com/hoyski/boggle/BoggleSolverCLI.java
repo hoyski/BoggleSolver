@@ -43,9 +43,16 @@ public class BoggleSolverCLI {
                 long end = System.currentTimeMillis();
                 System.out.printf("Found %d words in %d ms%n%n", wordsAndChains.size(), (end - start));
 
+                int totalScore = 0;
+
                 for (WordAndChains wordAndChains : wordsAndChains) {
+                    totalScore += wordAndChains.getBoggleScore();
                     for (int i = 0; i < wordAndChains.getLetterChains().size(); i++) {
-                        System.out.printf("%10s - ", (i > 0) ? "" : wordAndChains.getWord());
+                        if (i == 0) {
+                            System.out.printf("%10s (%2d) - ", wordAndChains.getWord(), wordAndChains.getBoggleScore());
+                        } else {
+                            System.out.printf("%18s", "");
+                        }
                         LetterChain letterChain = wordAndChains.getLetterChains().get(i);
                         for (int p = 0; p < letterChain.getLetters().size(); ++p) {
                             if (p > 0) {
@@ -57,6 +64,7 @@ public class BoggleSolverCLI {
                     }
                 }
                 System.out.println();
+                System.out.printf("Total score: %3d%n%n", totalScore);
             }
         }
     }
