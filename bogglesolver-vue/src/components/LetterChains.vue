@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="boggle-solver">
     <h1>Boggle Solver</h1>
     <div id="letters">
       <span>Letters:</span>
@@ -139,6 +139,11 @@ export default {
   box-sizing: border-box;
 }
 
+#boggle-solver {
+  width: 80%;
+  margin: 0 auto;
+}
+
 #letters > * {
   margin-right: 10px;
 }
@@ -175,7 +180,7 @@ export default {
 }
 
 .tile {
-  border-radius: 8px;
+  border-radius: 12px;
   border: 2px solid darkgray;
   width: 100%;
   display: inline-flex;
