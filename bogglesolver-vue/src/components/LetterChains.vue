@@ -7,7 +7,7 @@
         @input="solveBoard"
         v-model="characters"
         id="charactersInput"
-        size="16"
+        size="25"
         ref="charactersInput"
       />
       <button class="btn btn-outline-dark" @click="clearLetters">Clear</button>
