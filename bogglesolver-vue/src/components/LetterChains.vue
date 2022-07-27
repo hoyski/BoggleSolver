@@ -11,7 +11,12 @@
         ref="charactersInput"
       />
       <button class="btn btn-outline-dark" @click="clearLetters">Clear</button>
+      <div id="helper-text">
+        Enter the 16 letters on the board row by row.<br />
+        Enter only Q for the Qu die.
+      </div>
     </div>
+
     <div id="board-wrapper">
       <div id="board">
         <div class="tile-row" v-for="y in 4" v-bind:key="y">
@@ -110,6 +115,14 @@ export default {
         chainSvg.append(lineElem);
       }
     },
+    placeSvgOverBoard() {
+      // Move svg to be on top of the board
+      let boardRect = document.getElementById("board").getBoundingClientRect();
+      let svgElem = document.getElementById("chainSvg");
+
+      svgElem.style.top = boardRect.top + "px";
+      svgElem.style.left = boardRect.left + "px";
+    },
     clearLines() {
       let chainSvg = document.getElementById("chainSvg");
 
@@ -121,15 +134,11 @@ export default {
     },
   },
   mounted() {
-    console.log("DCL event fired");
     this.$refs["charactersInput"].focus();
 
-    // Move svg to be on top of the board
-    let boardRect = document.getElementById("board").getBoundingClientRect();
-    let svgElem = document.getElementById("chainSvg");
+    window.addEventListener("resize", this.placeSvgOverBoard);
 
-    svgElem.style.top = boardRect.top + "px";
-    svgElem.style.left = boardRect.left + "px";
+    this.placeSvgOverBoard();
   },
 };
 </script>
@@ -150,6 +159,12 @@ export default {
 
 #letters {
   margin-bottom: 10px;
+}
+
+#helper-text {
+  font-size: 0.8rem;
+  font-style: italic;
+  margin-bottom: 1rem;
 }
 
 #board-wrapper {

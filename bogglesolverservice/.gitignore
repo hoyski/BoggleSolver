@@ -1,0 +1,2 @@
+# Ignore static folder. It's contents come from bogglesolver-vue
+src/main/resources/static/**

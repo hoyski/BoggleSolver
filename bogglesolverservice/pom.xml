@@ -11,20 +11,21 @@
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>org.example</groupId>
+    <groupId>com.hoyski</groupId>
     <artifactId>bogglesolverservice</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <name>BoggleSolverService</name>
+    <packaging>war</packaging>
+    <description>Services and Web UI to find English words that can be made from a given list of Boggle dice</description>
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
 
         <dependency>
             <groupId>com.hoyski</groupId>
-            <artifactId>BoggleSolver</artifactId>
+            <artifactId>bogglesolver</artifactId>
             <version>1.0</version>
         </dependency>
 
@@ -36,7 +37,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-<!--            <scope>provided</scope>-->
+            <scope>provided</scope>
         </dependency>
 
         <!--dependency>
@@ -57,5 +58,15 @@
             </exclusions>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>bogglesolver</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
