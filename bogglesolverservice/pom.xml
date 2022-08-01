@@ -13,7 +13,7 @@
 
     <groupId>com.hoyski</groupId>
     <artifactId>bogglesolverservice</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <name>BoggleSolverService</name>
     <packaging>war</packaging>
     <description>Services and Web UI to find English words that can be made from a given list of Boggle dice</description>
