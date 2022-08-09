@@ -27,7 +27,12 @@
       </div>
     </div>
     <hr />
-    <span v-for="(letterChain, index) in letterChains" v-bind:key="index">
+    <span
+      v-for="(letterChain, index) in letterChains"
+      :key="index"
+      @mouseenter="showChain(index)"
+    >
+      <!-- @mouseleave="clearLines()" -->
       <hr
         v-if="
           index > 0 &&
@@ -35,7 +40,7 @@
           letterChains[index - 1].word.length != letterChains[index].word.length
         "
       />
-      <span @click="showChain(index)" class="word">{{ letterChain.word }}</span>
+      <span class="word">{{ letterChain.word }}</span>
     </span>
     <div>
       <svg id="chainSvg" viewBox="0 0 4 4"></svg>
@@ -45,6 +50,16 @@
 
 <script>
 import boggleSolverService from "@/services/BoggleSolverService";
+
+const colorList = [
+  "green",
+  "red",
+  "blue",
+  "yellow",
+  "cyan",
+  "orange",
+  "purple",
+];
 
 export default {
   name: "BoggleWords",
@@ -100,19 +115,29 @@ export default {
 
       // Add lines for the selected chain
       let chainSvg = document.getElementById("chainSvg");
-      let chain = this.letterChains[idx].letterChains[0].letters;
 
-      for (let i = 1; i < chain.length; i++) {
-        const lineElem = document.createElementNS(
-          "http://www.w3.org/2000/svg",
-          "line"
-        );
-        lineElem.setAttribute("x1", chain[i].x + 0.5);
-        lineElem.setAttribute("y1", chain[i].y + 0.5);
-        lineElem.setAttribute("x2", chain[i - 1].x + 0.5);
-        lineElem.setAttribute("y2", chain[i - 1].y + 0.5);
+      for (
+        let chn = 0;
+        chn < this.letterChains[idx].letterChains.length;
+        chn++
+      ) {
+        let chain = this.letterChains[idx].letterChains[chn].letters;
+        for (let i = 1; i < chain.length; i++) {
+          const lineElem = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
+          );
+          lineElem.setAttribute(
+            "style",
+            `stroke: ${colorList[chn % colorList.length]}`
+          );
+          lineElem.setAttribute("x1", chain[i].x + 0.5);
+          lineElem.setAttribute("y1", chain[i].y + 0.5);
+          lineElem.setAttribute("x2", chain[i - 1].x + 0.5);
+          lineElem.setAttribute("y2", chain[i - 1].y + 0.5);
 
-        chainSvg.append(lineElem);
+          chainSvg.append(lineElem);
+        }
       }
     },
     placeSvgOverBoard() {
