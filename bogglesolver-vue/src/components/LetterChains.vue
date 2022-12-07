@@ -2,19 +2,11 @@
   <div id="boggle-solver">
     <h1>Boggle Solver</h1>
     <div id="letters">
-      <span>Letters:</span>
-      <input
-        @input="solveBoard"
-        v-model="characters"
-        id="charactersInput"
-        size="25"
-        ref="charactersInput"
-      />
       <button class="btn btn-outline-dark" @click="clearLetters">Clear</button>
-      <div id="helper-text">
+      <!-- <div id="helper-text">
         Enter the 16 letters on the board row by row.<br />
         Enter only Q for the Qu die.
-      </div>
+      </div> -->
     </div>
 
     <div id="board-wrapper">
@@ -70,6 +62,18 @@ export default {
     };
   },
   methods: {
+    handleKeyPress(event) {
+      console.log(`In handleKeyPress with ${event.key}`);
+      if (event.key === "Backspace") {
+        this.characters = this.characters.substring(
+          0,
+          this.characters.length - 1
+        );
+      } else if (event.key.length === 1) {
+        this.characters += event.key;
+      }
+      this.solveBoard();
+    },
     solveBoard() {
       this.clearLines();
       this.characters = this.scrubChars(this.characters);
@@ -94,7 +98,6 @@ export default {
       this.characters = "";
       this.letterChains = [];
       this.clearLines();
-      document.getElementById("charactersInput").focus();
     },
     scrubChars(letters, allowUnderscore = false) {
       var scrubbedChars = "";
@@ -159,11 +162,12 @@ export default {
     },
   },
   mounted() {
-    this.$refs["charactersInput"].focus();
-
     window.addEventListener("resize", this.placeSvgOverBoard);
 
     this.placeSvgOverBoard();
+
+    // Place a keyup listener on the <html> element
+    window.addEventListener("keyup", this.handleKeyPress);
   },
 };
 </script>
