@@ -9,11 +9,15 @@
       </div> -->
     </div>
 
-    <div id="board-wrapper">
+    <div id="board-wrapper" tabindex="-1">
       <div id="board">
         <div class="tile-row" v-for="y in 4" v-bind:key="y">
           <div class="tile" v-for="x in 4" v-bind:key="(y - 1) * 4 + (x - 1)">
             {{ charAt(x, y) }}
+            <div
+              class="square-cursor"
+              v-show="(y - 1) * 4 + (x - 1) === characters.length"
+            ></div>
           </div>
         </div>
       </div>
@@ -63,7 +67,6 @@ export default {
   },
   methods: {
     handleKeyPress(event) {
-      console.log(`In handleKeyPress with ${event.key}`);
       if (event.key === "Backspace") {
         this.characters = this.characters.substring(
           0,
@@ -166,6 +169,8 @@ export default {
 
     this.placeSvgOverBoard();
 
+    document.getElementById("board-wrapper").focus();
+
     // Place a keyup listener on the <html> element
     window.addEventListener("keyup", this.handleKeyPress);
   },
@@ -201,6 +206,10 @@ export default {
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+}
+
+#board-wrapper:focus {
+  outline: none;
 }
 
 #chainSvg {
@@ -253,5 +262,22 @@ line {
   stroke-width: 0.25;
   stroke-linecap: round;
   stroke-opacity: 0.25;
+}
+
+@keyframes cursor-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.square-cursor {
+  background-color: #08b1c4;
+  width: 3px;
+  height: 3rem;
+  animation: 1000ms cursor-blink step-end infinite;
 }
 </style>
